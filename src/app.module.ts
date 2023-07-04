@@ -7,6 +7,9 @@ import { WishesModule } from './wishes/wishes.module';
 import { OffersModule } from './offers/offers.module';
 import { WishlistsModule } from './wishlists/wishlists.module';
 import { AuthModule } from './auth/auth.module';
+import { Wish } from './wishes/entities/wish.entity';
+import { Wishlist } from './wishlists/entities/wishlist.entity';
+import { Offer } from './offers/entities/offer.entity';
 
 @Module({
   imports: [
@@ -20,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'student',
       password: 'student',
       database: 'nest_project',
-      entities: [User],
+      entities: [User, Wish, Wishlist, Offer],
       synchronize: true,
     }),
     UsersModule,

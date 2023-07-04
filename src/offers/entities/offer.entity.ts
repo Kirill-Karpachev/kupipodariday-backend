@@ -11,7 +11,7 @@ import { User } from 'src/users/entities/user.entity';
 import { Wish } from 'src/wishes/entities/wish.entity';
 
 @Entity('offers')
-export class offer {
+export class Offer {
   @PrimaryGeneratedColumn()
   id: number;
 

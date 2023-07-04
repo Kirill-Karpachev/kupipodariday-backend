@@ -4,8 +4,12 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { Length, IsString, IsEmail, IsDate } from 'class-validator';
+import { Wish } from 'src/wishes/entities/wish.entity';
+import { Offer } from 'src/offers/entities/offer.entity';
+import { Wishlist } from 'src/wishlists/entities/wishlist.entity';
 
 @Entity('users')
 export class User {
@@ -34,14 +38,14 @@ export class User {
   @IsString()
   password: string;
 
-  @Column()
-  wishes: string;
+  @OneToMany(() => Wish, (wish) => wish.owner)
+  wishes: Wish[];
 
-  @Column()
-  offers: string;
+  @OneToMany(() => Offer, (offer) => offer.user)
+  offers: Offer[];
 
-  @Column()
-  wishlists: string;
+  @OneToMany(() => Wishlist, (wishlist) => wishlist.owner)
+  wishlists: Wishlist[];
 
   @CreateDateColumn()
   @IsDate()
@@ -49,5 +53,5 @@ export class User {
 
   @UpdateDateColumn()
   @IsDate()
-  updateAt: Date;
+  updatedAt: Date;
 }
