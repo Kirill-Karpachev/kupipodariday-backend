@@ -1,4 +1,4 @@
-import { IsNumber, IsString, IsDate } from 'class-validator';
+import { IsDate, IsNumber, IsString } from 'class-validator';
 import { User } from '../entities/user.entity';
 
 export class UserPublicProfileDto {
@@ -21,12 +21,12 @@ export class UserPublicProfileDto {
   updatedAt: Date;
 
   static getUserPublicProfile(user: User): UserPublicProfileDto {
-    const { id, username, avatar, about, createdAt, updatedAt } = user;
+    const { id, username, about, avatar, createdAt, updatedAt } = user;
     return {
       id,
       username,
-      avatar,
       about,
+      avatar,
       createdAt,
       updatedAt,
     };

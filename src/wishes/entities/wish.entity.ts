@@ -1,21 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
-import { Length, IsString, IsUrl, IsDate } from 'class-validator';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { Length, IsString, IsUrl } from 'class-validator';
 import { User } from 'src/users/entities/user.entity';
 import { Offer } from 'src/offers/entities/offer.entity';
+import { BaseEntity } from 'src/utils/base-entity';
 
 @Entity('wishes')
-export class Wish {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Wish extends BaseEntity {
   @Column()
   @IsString()
   @Length(1, 250)
@@ -48,12 +38,4 @@ export class Wish {
 
   @Column({ type: 'int', default: 0 })
   copied: number;
-
-  @CreateDateColumn()
-  @IsDate()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  @IsDate()
-  updateAt: Date;
 }

@@ -1,7 +1,7 @@
-import { IsNumber, IsString, IsDate, IsEmail } from 'class-validator';
+import { IsDate, IsEmail, IsNumber, IsString } from 'class-validator';
 import { User } from '../entities/user.entity';
 
-export class SignupUserDto {
+export class UserProfileDto {
   @IsNumber()
   id: number;
 
@@ -23,7 +23,7 @@ export class SignupUserDto {
   @IsDate()
   updatedAt: Date;
 
-  static getSignupUser(user: User): SignupUserDto {
+  static getUserProfile(user: User): UserProfileDto {
     const { id, username, about, avatar, email, createdAt, updatedAt } = user;
     return {
       id,
