@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { OffersService } from './offers.service';
 import { CreateOfferDto } from './dto/create-offer.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('offers')
@@ -28,7 +28,7 @@ export class OffersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOfferById(@Param('id') id: string) {
     return this.offersService.findOfferById(+id);
   }
 }

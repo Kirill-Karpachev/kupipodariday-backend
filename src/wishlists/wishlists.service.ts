@@ -36,7 +36,7 @@ export class WishlistsService {
     });
   }
 
-  async findOne(id: number): Promise<Wishlist> {
+  async findWishlistById(id: number): Promise<Wishlist> {
     const wishlist = await this.wishlistRepository.findOne({
       where: { id },
       relations: { items: true, owner: true },
@@ -47,12 +47,12 @@ export class WishlistsService {
     return wishlist;
   }
 
-  async updateOne(
+  async updateWishlist(
     user: User,
     dto: UpdateWishlistDto,
     wishlistId: number,
   ): Promise<Wishlist> {
-    const wishlist = await this.findOne(wishlistId);
+    const wishlist = await this.findWishlistById(wishlistId);
     if (user.id !== wishlist.owner.id) {
       throw new ForbiddenException('Этот список желаний другого пользователя');
     }
@@ -68,7 +68,7 @@ export class WishlistsService {
   }
 
   async remove(wishlistId: number, userId: number) {
-    const wishlist = await this.findOne(wishlistId);
+    const wishlist = await this.findWishlistById(wishlistId);
     if (userId !== wishlist.owner.id) {
       throw new ForbiddenException('Этот список желаний другого пользователя');
     }

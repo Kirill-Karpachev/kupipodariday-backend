@@ -30,10 +30,10 @@ export class OffersService {
   }
 
   async create(user: User, dto: CreateOfferDto): Promise<Offer> {
-    const wishes = await this.wishesService.findOne(dto.itemId);
+    const wishes = await this.wishesService.findWishById(dto.itemId);
     const { id } = user;
     const moneyDifference = wishes.price - wishes.raised;
-    const wish = await this.wishesService.findOne(wishes.id);
+    const wish = await this.wishesService.findWishById(wishes.id);
     const raised = wish.raised + dto.amount;
 
     if (dto.amount > moneyDifference) {

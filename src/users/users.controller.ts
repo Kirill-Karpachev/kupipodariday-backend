@@ -16,7 +16,7 @@ import { UserProfileDto } from './dto/user-profile.dto';
 import { Wish } from 'src/wishes/entities/wish.entity';
 import { WishesService } from 'src/wishes/wishes.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')

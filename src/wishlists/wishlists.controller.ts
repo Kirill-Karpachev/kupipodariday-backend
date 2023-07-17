@@ -10,7 +10,7 @@ import {
   Req,
 } from '@nestjs/common';
 import { WishlistsService } from './wishlists.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { CreateWishlistDto } from './dto/create-wishlist.dto';
 import { UpdateWishlistDto } from './dto/update-wishlist.dto';
 
@@ -26,7 +26,7 @@ export class WishlistsController {
 
   @Get(':id')
   findWishlist(@Param('id') id: number) {
-    return this.wishlistsService.findOne(+id);
+    return this.wishlistsService.findWishlistById(+id);
   }
 
   @Post()
@@ -40,7 +40,7 @@ export class WishlistsController {
     @Param('id') id: string,
     @Req() req,
   ) {
-    return this.wishlistsService.updateOne(req.user.id, dto, +id);
+    return this.wishlistsService.updateWishlist(req.user.id, dto, +id);
   }
 
   @Delete(':id')

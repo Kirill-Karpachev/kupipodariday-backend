@@ -10,7 +10,7 @@ import {
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
-import { LocalGuard } from './guards/local.guard';
+import { LocalGuard } from '../guards/local.guard';
 
 @Controller()
 export class AuthController {
@@ -20,7 +20,7 @@ export class AuthController {
   ) {}
 
   @Post('signup')
-  async create(@Body() dto: CreateUserDto) {
+  async signup(@Body() dto: CreateUserDto) {
     const userByEmail = await this.usersService.findUserByEmail(dto.email);
     const userByUsername = await this.usersService.findUserByUsername(
       dto.username,

@@ -10,7 +10,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { WishesService } from './wishes.service';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from 'src/guards/jwt.guard';
 import { Wish } from './entities/wish.entity';
 import { CreateWishDto } from './dto/create-wish.dto';
 import { UpdateWishDto } from './dto/update-wish.dto';
@@ -30,36 +30,36 @@ export class WishesController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.wishesService.findOne(+id);
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Req() req, @Body() createWishDto: CreateWishDto): Promise<Wish> {
-    return this.wishesService.create(req.user, createWishDto);
+  create(@Req() req, @Body() dto: CreateWishDto): Promise<Wish> {
+    return this.wishesService.create(req.user, dto);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(':id/copy')
-  copyWish(@Param('id') id: number, @Req() req) {
-    return this.wishesService.copyWish(id, req.user);
+  @Get(':id')
+  findWishById(@Param('id') id: string) {
+    return this.wishesService.findWishById(+id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  async updateOne(
+  async updateWish(
     @Req() req,
     @Param('id') id: string,
-    @Body() updateWishDto: UpdateWishDto,
+    @Body() dto: UpdateWishDto,
   ) {
-    return await this.wishesService.updateOne(+id, updateWishDto, req.user.id);
+    return await this.wishesService.updateWish(+id, dto, req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async remove(@Req() req, @Param('id') id: number) {
     return this.wishesService.removeWishes(id, req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/copy')
+  copyWish(@Param('id') id: number, @Req() req) {
+    return this.wishesService.copyWish(id, req.user);
   }
 }
