@@ -30,27 +30,28 @@ export class OffersService {
   }
 
   async create(user: User, dto: CreateOfferDto): Promise<Offer> {
-    const wishes = await this.wishesService.findWishById(dto.itemId);
-    const { id } = user;
+    const { itemId, amount } = dto;
+    const wishes = await this.wishesService.findWishById(itemId);
     const moneyDifference = wishes.price - wishes.raised;
     const wish = await this.wishesService.findWishById(wishes.id);
-    const raised = wish.raised + dto.amount;
+    const raised = wish.raised + amount;
 
-    if (dto.amount > moneyDifference) {
+    if (amount > moneyDifference) {
       throw new BadRequestException(
-        'Сумма взноса превышает сумму остатка стоимости подарка',
+        'Сумма взноса превышает размер оставшейся стоимости подарка',
       );
     }
 
-    await this.wishesService.updateByRaised(wish.id, raised);
-
-    if (id === wishes.owner.id) {
+    if (user.id === wishes.owner.id) {
       throw new BadRequestException('Вы не можете внести за свой подарок');
     }
 
     if (wishes.raised > 0 && wishes.price !== undefined) {
       throw new ConflictException('Обновление запрещено');
     }
+
+    await this.wishesService.updateByRaised(wish.id, raised);
+
     return this.offersRepository.save({
       ...dto,
       user,

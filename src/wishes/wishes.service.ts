@@ -77,8 +77,8 @@ export class WishesService {
     return wish;
   }
 
-  findWishesByUserId(id: number): Promise<Wish[]> {
-    return this.wishesRepository.find({
+  async findWishesByUserId(id: number): Promise<Wish[]> {
+    return await this.wishesRepository.find({
       where: { owner: { id } },
       relations: {
         owner: {
